@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<title>form</title>
+</head>
+<body>
+	<div class="container">
+		<form>
+		  Name:<br>
+		  <input type="text" name="name" id="name">
+		  <br>
+		  <br>
+		  Email:<br>
+		  <input type="text" name="email" id="email">
+		  <br>
+		  <br>
+		  Current City:<br>
+		  <input type="text" name="city" id="city">
+		  <br>
+		  <br>
+		  Zip Code:<br>
+		  <input type="text" name="zipcode" id="zip" >
+		  <br>
+		  <br>
+		  <button type="button" onclick="myFunction()">Submit</button>
+		</form>
+		<br>
+		<br>
+
+		<p id="alert" style="color: red"></p>
+		<p id="students"></p>
+	</div>
+	
+	<script   src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script>
+
+
+	function myFunction(){  
+			      var numbers = /^[0-9]+$/; 
+			      var text;
+			      
+
+			      if(zip.value.match(numbers)){  
+			      	text = "Zip Code OK";  
+			      }  else {  
+			      	text = "Zip Code not valid"; 
+			      } 
+			      document.getElementById("alert").innerHTML = text;   
+			      var student_info = "";
+			      var students = JSON.parse(localStorage.getItem("students"));
+			      console.log(students);
+			      for (var i = 0; i < students.length; ++i) {
+			      	student_info += students[i]['name'] + ',';
+			      	student_info += students[i]['email'] + ',';
+			      	student_info += students[i]['city'] + ',';
+			      	student_info += students[i]['zipcode'] + '<br>';
+			      }
+			      console.log(student_info);
+			      document.getElementById("students").innerHTML = student_info;
+			   	};
+			
+	</script>
+
+	<script>
+		$(function(){
+			$.getJSON( "http://www.ruicongjin.com/AAU/WNM617/jsonquiz/students.json", function(jd) {
+				var students = jd.students;
+				console.log(students);
+				localStorage.removeItem("students");
+           		localStorage.setItem("students", JSON.stringify(jd.students));
+		  });
+	});
+	</script>
+</body>
+</html>
